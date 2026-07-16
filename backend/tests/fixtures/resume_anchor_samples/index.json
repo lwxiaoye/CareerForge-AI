@@ -1,0 +1,78 @@
+[
+  {
+    "id": "contract-review-project",
+    "category": "project_first",
+    "source_type": "text",
+    "resume_text": "教育经历\n重庆工程学院 软件工程 本科 2023/09 - 2027/06\n项目经历\n合同审查助手 AI 合同风险审查 2026/01 - 2026/03\n负责 RAG 检索、条款抽取和风险高亮",
+    "expected_best_opening_anchor": "合同审查助手",
+    "expected_best_opening_anchor_type": "project",
+    "expected_must_include_keywords": [
+      "合同审查助手"
+    ],
+    "expected_must_exclude_keywords": [
+      "教育经历",
+      "重庆工程学院"
+    ]
+  },
+  {
+    "id": "unlabeled-internship-and-project",
+    "category": "unlabeled_mixed",
+    "source_type": "text",
+    "resume_text": "梁伟业\n绵阳江花木业有限公司 AI 应用工程师实习生 2026/03 - 至今\n负责 Agent 应用开发、业务流程落地和效果复盘\n合同审查助手 AI 合同风险审查 2026/01 - 2026/03\n负责 RAG 检索、条款抽取和风险高亮",
+    "expected_best_opening_anchor": "绵阳江花木业有限公司 AI 应用工程师实习生",
+    "expected_best_opening_anchor_type": "internship",
+    "expected_must_include_keywords": [
+      "绵阳江花木业有限公司",
+      "合同审查助手"
+    ],
+    "expected_must_exclude_keywords": [
+      "梁伟业"
+    ]
+  },
+  {
+    "id": "work-experience-before-project",
+    "category": "work_first",
+    "source_type": "text",
+    "resume_text": "工作经历\n上海某科技有限公司 后端开发工程师 2025/06 - 2026/06\n负责 Redis 缓存优化、接口性能治理和上线复盘\n项目经历\nCareerForge-AI 面试官优化平台 2025/01 - 2025/05\n负责 SSE 流式输出和面试追问护栏",
+    "expected_best_opening_anchor": "上海某科技有限公司 后端开发工程师",
+    "expected_best_opening_anchor_type": "work",
+    "expected_must_include_keywords": [
+      "上海某科技有限公司",
+      "CareerForge-AI"
+    ],
+    "expected_must_exclude_keywords": [
+      "工作经历"
+    ]
+  },
+  {
+    "id": "compact-project-title-template",
+    "category": "compact_project_title",
+    "source_type": "text",
+    "resume_text": "模型实践：深度使用 GPT、Claude、Gemini 等主流大模型，构建垂类场景解决方案\n项目经历 Experience\n03_Agent工程化与生产实践\n03_项目表达与面试口述\nRAG",
+    "expected_best_opening_anchor": "03_Agent工程化与生产实践",
+    "expected_best_opening_anchor_type": "project",
+    "expected_must_include_keywords": [
+      "03_Agent工程化与生产实践"
+    ],
+    "expected_must_exclude_keywords": [
+      "项目经历 Experience"
+    ],
+    "max_project_blocks": 3
+  },
+  {
+    "id": "template-noise-title-should-not-win",
+    "category": "template_noise",
+    "source_type": "text",
+    "resume_text": "★ AI 增强开发：深度使用 GPT、Claude、Gemini 等主流大模型\nCareerForge-AI - AI 智能面试官 Agent 应用开发（团队完成80%） 2026/01 - 2026/03\nAI 面试官基于简历锚点、JD、RAG 知识库进行 8阶段结构化面试，逐轮提问 + 六维评估\n院级奖项10次",
+    "expected_best_opening_anchor": "CareerForge-AI",
+    "expected_best_opening_anchor_type": "project",
+    "expected_must_include_keywords": [
+      "CareerForge-AI"
+    ],
+    "expected_must_exclude_keywords": [
+      "★ AI 增强开发",
+      "院级奖项10次"
+    ],
+    "max_project_blocks": 3
+  }
+]

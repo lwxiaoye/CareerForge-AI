@@ -1,0 +1,29 @@
+fastapi==0.115.13
+uvicorn[standard]==0.34.3
+SQLAlchemy==2.0.41
+alembic==1.16.2
+pydantic-settings==2.10.1
+PyJWT==2.10.1
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+email-validator==2.2.0
+PyMySQL==1.1.1
+redis==5.0.7
+httpx==0.28.1
+python-multipart==0.0.20
+pypdf==5.6.1
+pdfminer.six==20251107
+python-docx==1.1.2
+openpyxl==3.1.5
+Pillow==11.2.1
+paddlepaddle>=3.0.0
+paddleocr>=2.8.1
+reportlab==4.2.2
+rl-renderPM==4.0.3
+# 先装 CPU �?PyTorch，避免自动拉�?CUDA �?
+torch>=2.0.0 --index-url https://download.pytorch.org/whl/cpu
+sentence-transformers>=3.0.0
+chromadb>=0.5.0
+rq==2.1.0
+cryptography>=43.0.0
+imageio-ffmpeg>=0.5.0  # ����������Ƶת����~31MB���״ΰ�װ������

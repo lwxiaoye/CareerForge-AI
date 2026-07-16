@@ -1,0 +1,42 @@
+# 全局：所有位置的敏感/生成物一律不进库
+*.env
+*.env.*
+.env
+.env.*
+__pycache__/
+*.pyc
+*.db
+*.sqlite3
+*.sqlite
+.DS_Store
+node_modules/
+dist/
+.venv/
+tmp/local/
+
+# 项目特定
+backend/.pytest_cache/
+backend/.mypy_cache/
+.stack/
+docker-compose.override.yml
+.claude/
+.idea/
+
+# 本地迁移/部署产物与临时凭据（不属于项目源码）
+.tmp-careerforge-images.tar*
+careerforge-images.tar
+careerforge-server.tar.gz
+.tmp_deploy_key/
+.tmp_resume_refs/
+.archive/
+.superpowers/
+claude-range-slider/
+docs/superpowers/
+tmp/
+
+# 运行时生成的数据目录（含用户上传、向量库、头像等，绝不可入库）
+backend/data/chroma/
+backend/data/avatars/
+backend/data/banners/
+backend/data/feedbacks/
+backend/data/agent_uploads/

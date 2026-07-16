@@ -1,0 +1,92 @@
+from __future__ import annotations
+
+from functools import lru_cache
+from pathlib import Path
+from typing import Optional
+
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+_BACKEND_DIR = Path(__file__).resolve().parents[2]
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=str(_BACKEND_DIR / ".env"),
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+    )
+
+    app_env: str = Field(default="development", alias="APP_ENV")
+    app_name: str = Field(default="CareerForge AI 智能体平台", alias="APP_NAME")
+    api_v1_prefix: str = Field(default="/api/v1", alias="API_V1_PREFIX")
+    frontend_origin: str = Field(default="http://localhost:5173", alias="FRONTEND_ORIGIN")
+    database_url: str = Field(default="sqlite:///./zhipei_auth.db", alias="DATABASE_URL")
+    redis_url: str = Field(default="redis://localhost:6379/0", alias="REDIS_URL")
+
+    jwt_secret_key: str = Field(alias="JWT_SECRET_KEY")  # REQUIRED: no default; missing env fails startup
+    api_key_encryption_key: str = Field(alias="API_KEY_ENCRYPTION_KEY")  # REQUIRED: Fernet key; generate with `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`
+    access_token_expire_minutes: int = Field(default=30, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
+    refresh_token_expire_days: int = Field(default=7, alias="REFRESH_TOKEN_EXPIRE_DAYS")
+    login_fail_limit: int = Field(default=10, alias="LOGIN_FAIL_LIMIT")
+    login_fail_window_seconds: int = Field(default=600, alias="LOGIN_FAIL_WINDOW_SECONDS")
+    login_lock_seconds: int = Field(default=300, alias="LOGIN_LOCK_SECONDS")
+
+    api_rate_limit_rps: int = Field(default=200, alias="API_RATE_LIMIT_RPS")  # per IP per window; 0 disables
+    api_rate_limit_window_seconds: int = Field(default=60, alias="API_RATE_LIMIT_WINDOW_SECONDS")
+    trusted_proxy_count: int = Field(
+        default=0,
+        alias="TRUSTED_PROXY_COUNT",
+        description="前置可信代理跳数；用于从 X-Forwarded-For 提取真实客户端 IP。0=不信任 XFF（默认最安全）",
+    )
+
+    admin_bootstrap_username: str = Field(default="admin", alias="ADMIN_BOOTSTRAP_USERNAME")
+    admin_bootstrap_email: str = Field(default="admin@example.com", alias="ADMIN_BOOTSTRAP_EMAIL")
+    admin_bootstrap_password: str = Field(default="123456", alias="ADMIN_BOOTSTRAP_PASSWORD")
+    admin_bootstrap_name: str = Field(default="平台管理员", alias="ADMIN_BOOTSTRAP_NAME")
+
+    smtp_host: Optional[str] = Field(default=None, alias="SMTP_HOST")
+    smtp_port: int = Field(default=587, alias="SMTP_PORT")
+    smtp_username: Optional[str] = Field(default=None, alias="SMTP_USERNAME")
+    smtp_password: Optional[str] = Field(default=None, alias="SMTP_PASSWORD")
+    smtp_from_email: str = Field(default="no-reply@example.com", alias="SMTP_FROM_EMAIL")
+    smtp_use_ssl: bool = Field(default=False, alias="SMTP_USE_SSL")
+    smtp_use_tls: bool = Field(default=True, alias="SMTP_USE_TLS")
+
+    email_code_length: int = Field(default=6, alias="EMAIL_CODE_LENGTH")
+    email_code_ttl_minutes: int = Field(default=10, alias="EMAIL_CODE_TTL_MINUTES")
+    email_code_cooldown_seconds: int = Field(default=60, alias="EMAIL_CODE_COOLDOWN_SECONDS")
+    email_code_max_attempts: int = Field(default=5, alias="EMAIL_CODE_MAX_ATTEMPTS")
+
+    skill_storage_dir: str = Field(default="./data/skills", alias="SKILL_STORAGE_DIR")
+    skill_max_content_bytes: int = Field(default=200_000, alias="SKILL_MAX_CONTENT_BYTES")
+    agent_upload_storage_dir: str = Field(default="./data/agent_uploads", alias="AGENT_UPLOAD_STORAGE_DIR")
+    agent_upload_max_bytes: int = Field(default=20_000_000, alias="AGENT_UPLOAD_MAX_BYTES")
+    interview_knowledge_base_dir: str = Field(
+        default=r"D:\Ai Agent\Knowledge Base",
+        alias="INTERVIEW_KNOWLEDGE_BASE_DIR",
+    )
+    interview_use_local_paddleocr: bool = Field(default=True, alias="INTERVIEW_USE_LOCAL_PADDLEOCR")
+    interview_local_paddleocr_lang: str = Field(default="ch", alias="INTERVIEW_LOCAL_PADDLEOCR_LANG")
+
+    sso_base_url: str = Field(default="http://10.255.57.13:9090", alias="SSO_BASE_URL")
+    sso_timeout_seconds: float = Field(default=5.0, alias="SSO_TIMEOUT_SECONDS")
+    sso_source: str = Field(default="qingzhu", alias="SSO_SOURCE")
+    chroma_persist_dir: str = Field(
+        default="./data/chroma",
+        alias="CHROMA_PERSIST_DIR",
+    )
+
+    @property
+    def is_development(self) -> bool:
+        return self.app_env.lower() != "production"
+
+    @property
+    def smtp_enabled(self) -> bool:
+        return bool(self.smtp_host and self.smtp_username and self.smtp_password)
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
